@@ -1,0 +1,29 @@
+import mongoose from 'mongoose'
+
+const bookingSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User',
+  },
+  service: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'Service',
+  },
+  bookingDate: {
+    type: Date,
+    default: Date.now,
+  },
+  bookingTime: {
+    type: String,
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'completed', 'cancelled'],
+    default: 'pending',
+  },
+})
+
+export default mongoose.model('Booking', bookingSchema)
