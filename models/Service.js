@@ -27,6 +27,11 @@ const serviceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  providerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   datePosted: {
     type: Date,
     default: Date.now,

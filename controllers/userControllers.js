@@ -17,6 +17,23 @@ export const getAllUsers = async (req, res) => {
   return res.status(200).json({ users })
 }
 
+export const getUserById = async (req, res, next) => {
+  const { userId } = req.params
+
+  let user
+  try {
+    user = await User.findById(userId)
+  } catch (err) {
+    console.error(err)
+  }
+
+  if (!user) {
+    return res.status(500).json({ message: 'Unexpected Error Occurred' })
+  } else {
+    return res.status(200).json({ user })
+  }
+}
+
 export const createNewUser = async (req, res, next) => {
   const { name, email, password, phoneNumber, address } = req.body
   // || (!password && password.length < 6)
@@ -79,4 +96,29 @@ export const loginUser = async (req, res, next) => {
     accessToken: existingUserAccessToken,
     userId: existingUser._id,
   })
+}
+
+export const becomeProvider = async (req, res, next) => {
+  const { userId } = req.body
+
+  if (!userId) {
+    return res.status(422).json({ message: 'Invalid Data' })
+  }
+
+  let user
+
+  try {
+    user = await User.findById(userId)
+  } catch (err) {
+    console.error(err)
+  }
+
+  if (!user) {
+    return res.status(404).json({ message: 'No User Found' })
+  }
+
+  user.isProvider = true
+  await user.save()
+
+  return res.status(200).json({ message: 'Provider Status Updated' })
 }

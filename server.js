@@ -6,6 +6,7 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 
 import userRouter from './routers/userRouters.js'
+import serviceRouter from './routers/serviceRouters.js'
 
 const app = express()
 dotenv.config()
@@ -28,6 +29,7 @@ app.use(bodyParser.json())
 // Database Connection
 // ----------------------------------------------------------------
 app.use('/users', userRouter)
+app.use('/services', serviceRouter)
 
 // ----------------------------------------------------------------
 // Database Connection
