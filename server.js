@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser'
 
 import userRouter from './routers/userRouters.js'
 import serviceRouter from './routers/serviceRouters.js'
+import bookingRouter from './routers/bookingRouters.js'
 
 const app = express()
 dotenv.config()
@@ -30,6 +31,7 @@ app.use(bodyParser.json())
 // ----------------------------------------------------------------
 app.use('/users', userRouter)
 app.use('/services', serviceRouter)
+app.use('/bookings', bookingRouter)
 
 // ----------------------------------------------------------------
 // Database Connection

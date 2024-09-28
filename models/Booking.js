@@ -16,7 +16,7 @@ const bookingSchema = new mongoose.Schema({
     default: Date.now,
   },
   bookingTime: {
-    type: String,
+    type: Date,
     required: true,
   },
   status: {
