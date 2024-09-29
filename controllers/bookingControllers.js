@@ -81,3 +81,42 @@ export const getbookingsByProvider = async (req, res) => {
     return res.status(500).json({ message: 'Failed to fetch bookings.' })
   }
 }
+
+export const updateBookingStatus = async (req, res) => {
+  const { bookingId } = req.params
+  const { status } = req.body
+
+  try {
+    const updatedBooking = await Booking.findByIdAndUpdate(
+      bookingId,
+      { status },
+      { new: true }
+    )
+
+    if (!updatedBooking) {
+      return res.status(404).json({ message: 'Booking not found' })
+    }
+
+    return res.json(updatedBooking)
+  } catch (err) {
+    return res.status(500).json({ message: 'Failed to update booking status' })
+  }
+}
+
+export const updatePaymentStatus = async (req, res) => {
+  const { bookingId } = req.params
+
+  try {
+    const booking = await Booking.findById(bookingId)
+    if (!booking) {
+      return res.status(404).send('Booking not found')
+    }
+
+    booking.paymentStatus = 'paid'
+    await booking.save()
+
+    return res.status(200).json({ message: 'Payment successful' })
+  } catch (err) {
+    return res.status(500).json({ message: 'Failed to process payment' })
+  }
+}

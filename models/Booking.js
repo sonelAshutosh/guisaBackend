@@ -24,6 +24,11 @@ const bookingSchema = new mongoose.Schema({
     enum: ['pending', 'completed', 'cancelled'],
     default: 'pending',
   },
+  paymentStatus: {
+    type: String,
+    enum: ['pending', 'paid'],
+    default: 'pending',
+  },
 })
 
 export default mongoose.model('Booking', bookingSchema)

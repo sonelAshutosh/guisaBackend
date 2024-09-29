@@ -13,7 +13,21 @@ export const getAllServices = async (req, res) => {
   return res.status(200).json({ services })
 }
 
-export const getServiceByLocation = async (req, res, next) => {}
+export const getServiceByLocation = async (req, res, next) => {
+  const { location } = req.params
+
+  try {
+    const services = await Service.find({ location })
+    if (!services.length) {
+      return res
+        .status(404)
+        .json({ message: 'No services found in this location.' })
+    }
+    res.status(200).json({ services })
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching services by location.' })
+  }
+}
 
 export const createNewService = async (req, res, next) => {
   const { name, description, type, price, location, providerId } = req.body
